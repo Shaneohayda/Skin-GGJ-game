@@ -1,43 +1,22 @@
+#include "stdafx.h"
+#include "Main.h"
+#include "Music.h"
+#include "Timer.h"
+#include "Scene.h"
 #include "SceneManager.h"
 
 static SceneManager *instance = NULL;
 
-
-
-SceneManager* SceneManager::getInstance()
+int main(int argc, char *argv[])
 {
-	if (instance == 0)
-	{
-		instance = new SceneManager();
-	}
+	CMain* cmain = new CMain(600, 500);
 
-	return instance;
-}
+	Music::init();
+	Music music("music.ogg");
+	music.loop();
+	cmain->GameLoop();
 
-SceneManager::SceneManager()
-{
-	init();
-}
-
-void SceneManager::init()
-{
-	currentRunningScene = 0;
-}
-
-SceneManager::~SceneManager()
-{
-	delete instance;
-}
-
-void SceneManager::runwithscene(Scene* scene)
-{
-	if (currentRunningScene != 0)
-	{
-		delete currentRunningScene;
-	}
-
-	currentRunningScene = scene;
-
-	currentRunningScene->run();
+	delete cmain;
+	return 0;
 }
 
